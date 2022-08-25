@@ -54,7 +54,7 @@ __export(root_exports, {
 var import_react2 = require("@remix-run/react");
 
 // app/styles/app.css
-var app_default = "/build/_assets/app-KH5LW6O5.css";
+var app_default = "/build/_assets/app-MNSJQ5BI.css";
 
 // app/root.tsx
 var meta = () => ({
@@ -74,16 +74,70 @@ function App() {
 // app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
-  default: () => Index
+  action: () => action,
+  default: () => Index,
+  loader: () => loader
 });
+var import_node = require("@remix-run/node"), import_react3 = require("@remix-run/react");
+
+// app/db/idea.server.ts
+var import_redis_om2 = require("redis-om");
+
+// app/db/redis.server.ts
+var import_redis_om = require("redis-om"), redisClient = new import_redis_om.Client();
+async function redisConnect() {
+  redisClient.isOpen() || await redisClient.open(process.env.REDIS_URL);
+}
+
+// app/db/idea.server.ts
+var Idea = class extends import_redis_om2.Entity {
+}, ideaSchema = new import_redis_om2.Schema(Idea, {
+  name: { type: "string" },
+  createAt: { type: "date", sortable: !0 }
+});
+async function getRepository() {
+  await redisConnect();
+  let repository = redisClient.fetchRepository(ideaSchema);
+  return await repository.createIndex(), repository;
+}
+async function createIdea(name) {
+  return (await getRepository()).createAndSave({ name, createAt: new Date() });
+}
+async function getAllIdeas() {
+  return (await getRepository()).search().sortDescending("createAt").all();
+}
+
+// app/routes/index.tsx
+async function loader() {
+  let ideas = await getAllIdeas();
+  return (0, import_node.json)({ ideas });
+}
+async function action({ request }) {
+  let formData = await request.formData(), intent = formData.get("intent");
+  if (intent === "create") {
+    let name = formData.get("name"), idea = await createIdea(name);
+    return (0, import_node.json)({ intent, idea });
+  }
+}
 function Index() {
-  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", {
+  let { ideas } = (0, import_react3.useLoaderData)();
+  return console.log(ideas), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", {
     className: "text-3xl font-bold underline"
-  }, "Hello world!"));
+  }, "Ideas"), /* @__PURE__ */ React.createElement(import_react3.Form, {
+    method: "post"
+  }, /* @__PURE__ */ React.createElement("input", {
+    name: "intent",
+    value: "create",
+    type: "hidden"
+  }), /* @__PURE__ */ React.createElement("input", {
+    type: "text",
+    name: "name",
+    placeholder: "Write a idea"
+  }), /* @__PURE__ */ React.createElement("button", null, "Send")));
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "37388fe6", entry: { module: "/build/entry.client-6ZVMPP67.js", imports: ["/build/_shared/chunk-GPCA4VAL.js", "/build/_shared/chunk-GWJFZCPI.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BVDODVBJ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-CCDIZ7PG.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-37388FE6.js" };
+var assets_manifest_default = { version: "67500039", entry: { module: "/build/entry.client-X6TAGU5R.js", imports: ["/build/_shared/chunk-JMBABMNG.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-AO2RAP7M.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-VMXVO3CI.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-67500039.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

@@ -9,7 +9,8 @@ export interface Idea {
 export class Idea extends Entity {}
 
 const ideaSchema = new Schema(Idea, {
-    name: { type: "string" }
+    name: { type: "string" },
+    createAt: { type: "date", sortable: true }
 });
 
 
@@ -21,12 +22,12 @@ async function getRepository(): Promise<Repository<Idea>> {
     return repository;
 }
 
-export async function createCategory(name: string) : Promise<Idea> {
+export async function createIdea(name: string) : Promise<Idea> {
     const repository = await getRepository();
     return repository.createAndSave({ name, createAt: new Date() });
 }
 
-export async function getAllCategoriesByUser(userId: string) {
+export async function getAllIdeas() {
     const repository = await getRepository();
     
     return repository.search()
