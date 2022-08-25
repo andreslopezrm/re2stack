@@ -54,7 +54,7 @@ __export(root_exports, {
 var import_react2 = require("@remix-run/react");
 
 // app/styles/app.css
-var app_default = "/build/_assets/app-MNSJQ5BI.css";
+var app_default = "/build/_assets/app-Q43FOFA3.css";
 
 // app/root.tsx
 var meta = () => ({
@@ -68,7 +68,9 @@ function links() {
 function App() {
   return /* @__PURE__ */ React.createElement("html", {
     lang: "en"
-  }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement(import_react2.Meta, null), /* @__PURE__ */ React.createElement(import_react2.Links, null)), /* @__PURE__ */ React.createElement("body", null, /* @__PURE__ */ React.createElement(import_react2.Outlet, null), /* @__PURE__ */ React.createElement(import_react2.ScrollRestoration, null), /* @__PURE__ */ React.createElement(import_react2.Scripts, null), /* @__PURE__ */ React.createElement(import_react2.LiveReload, null)));
+  }, /* @__PURE__ */ React.createElement("head", null, /* @__PURE__ */ React.createElement(import_react2.Meta, null), /* @__PURE__ */ React.createElement(import_react2.Links, null)), /* @__PURE__ */ React.createElement("body", {
+    className: "bg-gray-100"
+  }, /* @__PURE__ */ React.createElement(import_react2.Outlet, null), /* @__PURE__ */ React.createElement(import_react2.ScrollRestoration, null), /* @__PURE__ */ React.createElement(import_react2.Scripts, null), /* @__PURE__ */ React.createElement(import_react2.LiveReload, null)));
 }
 
 // app/routes/index.tsx
@@ -78,7 +80,7 @@ __export(routes_exports, {
   default: () => Index,
   loader: () => loader
 });
-var import_node = require("@remix-run/node"), import_react3 = require("@remix-run/react");
+var import_node = require("@remix-run/node"), import_react3 = require("@remix-run/react"), import_react4 = require("react");
 
 // app/db/idea.server.ts
 var import_redis_om2 = require("redis-om");
@@ -113,31 +115,63 @@ async function loader() {
   return (0, import_node.json)({ ideas });
 }
 async function action({ request }) {
-  let formData = await request.formData(), intent = formData.get("intent");
-  if (intent === "create") {
-    let name = formData.get("name"), idea = await createIdea(name);
-    return (0, import_node.json)({ intent, idea });
-  }
+  let name = (await request.formData()).get("name"), idea = await createIdea(name);
+  return (0, import_node.json)({ idea });
 }
 function Index() {
-  let { ideas } = (0, import_react3.useLoaderData)();
-  return console.log(ideas), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", {
-    className: "text-3xl font-bold underline"
-  }, "Ideas"), /* @__PURE__ */ React.createElement(import_react3.Form, {
-    method: "post"
+  let { ideas } = (0, import_react3.useLoaderData)(), data = (0, import_react3.useActionData)(), { state } = (0, import_react3.useTransition)(), formRef = (0, import_react4.useRef)(null), isSubmiting = state === "submitting";
+  return (0, import_react4.useEffect)(() => {
+    var _a;
+    (data == null ? void 0 : data.idea) && ((_a = formRef == null ? void 0 : formRef.current) == null || _a.reset());
+  }, [data]), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
+    className: "max-w-screen-md  mx-auto"
+  }, /* @__PURE__ */ React.createElement("h1", {
+    className: "font-extrabold text-3xl mb-8 mt-6"
+  }, "Re2 Stack"), /* @__PURE__ */ React.createElement(import_react3.Form, {
+    method: "post",
+    className: "w-full",
+    ref: formRef
   }, /* @__PURE__ */ React.createElement("input", {
     name: "intent",
     value: "create",
     type: "hidden"
-  }), /* @__PURE__ */ React.createElement("input", {
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "flex gap-2 items-end"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "flex-1"
+  }, /* @__PURE__ */ React.createElement("label", {
+    htmlFor: "name",
+    className: "block mb-2 text-sm font-medium text-gray-900"
+  }, "Write an idea"), /* @__PURE__ */ React.createElement("input", {
     type: "text",
+    id: "name",
     name: "name",
-    placeholder: "Write a idea"
-  }), /* @__PURE__ */ React.createElement("button", null, "Send")));
+    className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    required: !0
+  })), /* @__PURE__ */ React.createElement("button", {
+    type: "submit",
+    disabled: isSubmiting,
+    className: "text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+  }, "Save ", isSubmiting ? "..." : null))), /* @__PURE__ */ React.createElement("div", {
+    className: "overflow-x-auto mt-6 relative shadow-md sm:rounded-lg"
+  }, /* @__PURE__ */ React.createElement("table", {
+    className: "w-full text-sm text-left text-gray-500"
+  }, /* @__PURE__ */ React.createElement("thead", {
+    className: "text-xs text-gray-700 uppercase bg-gray-50"
+  }, /* @__PURE__ */ React.createElement("tr", null, /* @__PURE__ */ React.createElement("th", {
+    scope: "col",
+    className: "py-3 px-6"
+  }, "Name"))), /* @__PURE__ */ React.createElement("tbody", null, ideas.map(({ entityId, name }) => /* @__PURE__ */ React.createElement("tr", {
+    className: "bg-white border-b",
+    key: entityId
+  }, /* @__PURE__ */ React.createElement("td", {
+    scope: "row",
+    className: "py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+  }, name))))))));
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "67500039", entry: { module: "/build/entry.client-X6TAGU5R.js", imports: ["/build/_shared/chunk-JMBABMNG.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-AO2RAP7M.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-VMXVO3CI.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-67500039.js" };
+var assets_manifest_default = { version: "0d24c60c", entry: { module: "/build/entry.client-ZP3RJNQ2.js", imports: ["/build/_shared/chunk-HVDWFEEV.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-NVQONN56.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-IJ253YQE.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-0D24C60C.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
