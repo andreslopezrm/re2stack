@@ -48,13 +48,23 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
 var root_exports = {};
 __export(root_exports, {
   default: () => App,
+  links: () => links,
   meta: () => meta
 });
-var import_react2 = require("@remix-run/react"), meta = () => ({
+var import_react2 = require("@remix-run/react");
+
+// app/styles/app.css
+var app_default = "/build/_assets/app-KH5LW6O5.css";
+
+// app/root.tsx
+var meta = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Re2 Stack",
   viewport: "width=device-width,initial-scale=1"
 });
+function links() {
+  return [{ rel: "stylesheet", href: app_default }];
+}
 function App() {
   return /* @__PURE__ */ React.createElement("html", {
     lang: "en"
@@ -67,25 +77,13 @@ __export(routes_exports, {
   default: () => Index
 });
 function Index() {
-  return /* @__PURE__ */ React.createElement("div", {
-    style: { fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }
-  }, /* @__PURE__ */ React.createElement("h1", null, "Welcome to Remix"), /* @__PURE__ */ React.createElement("ul", null, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
-    target: "_blank",
-    href: "https://remix.run/tutorials/blog",
-    rel: "noreferrer"
-  }, "15m Quickstart Blog Tutorial")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
-    target: "_blank",
-    href: "https://remix.run/tutorials/jokes",
-    rel: "noreferrer"
-  }, "Deep Dive Jokes App Tutorial")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("a", {
-    target: "_blank",
-    href: "https://remix.run/docs",
-    rel: "noreferrer"
-  }, "Remix Docs"))));
+  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", {
+    className: "text-3xl font-bold underline"
+  }, "Hello world!"));
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "4a1c238c", entry: { module: "/build/entry.client-6ZVMPP67.js", imports: ["/build/_shared/chunk-GPCA4VAL.js", "/build/_shared/chunk-GWJFZCPI.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-O42K7S6T.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-TKKNDEPT.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-4A1C238C.js" };
+var assets_manifest_default = { version: "37388fe6", entry: { module: "/build/entry.client-6ZVMPP67.js", imports: ["/build/_shared/chunk-GPCA4VAL.js", "/build/_shared/chunk-GWJFZCPI.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-BVDODVBJ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-CCDIZ7PG.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-37388FE6.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
