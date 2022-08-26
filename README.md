@@ -1,6 +1,29 @@
-# Welcome to Remix!
+# Re2 Stack
+
+![re2stack](https://res.cloudinary.com/practicaldev/image/fetch/s--thaxOivO--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/43ld8eax02a0nbwo1rpg.png)
+
+The name comes from both technologies starting with the word Re, Remix and Redis, so these two (2) technologies make up the stack.
+
+When talking about Redis today it is thought that it simply provides a caching mechanism and could hardly be used in other parts that would make up an architecture, however Redis has evolved so much that it can cover many more scenarios, even being the main database without need for no other.
+
+## The Article:
+
+[https://dev.to/andreslopezrm/introducing-re2-stack-50l](https://dev.to/andreslopezrm/introducing-re2-stack-50l)
+
+## Remix
 
 - [Remix Docs](https://remix.run/docs)
+
+
+## Redis
+
+- Create an account in [Redis Cloud](https://redis.com/try-free/) and get the Redis URL
+- Create an .env file with
+
+```
+REDIS_URL=
+```
+
 
 ## Deployment
 
